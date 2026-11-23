@@ -3,7 +3,7 @@ import { markets } from './core/market/market.config';
 
 const marketRoutes: Routes = Object.values(markets).map(({ code, name }): Route => ({
   path: code,
-  title: `Seguro de auto SURA | ${name}`,
+  title: `Seguro de auto | ${name}`,
   data: { market: code },
   children: [
     {
@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    title: 'Seguro de auto SURA',
+    title: 'Seguro de auto',
     loadComponent: () => import('./features/market-selection/market-selection').then((module) => module.MarketSelection),
   },
   { path: '**', redirectTo: '' },

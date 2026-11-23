@@ -18,6 +18,6 @@ export class MarketTitleStrategy extends TitleStrategy {
     }
 
     this.document.documentElement.lang = findRouteMarket(route)?.locale ?? 'es';
-    this.title.setTitle(this.buildTitle(snapshot) ?? 'Seguro de auto SURA');
+    this.title.setTitle(this.buildTitle(snapshot) ?? 'Seguro de auto');
   }
 }

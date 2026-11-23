@@ -1,4 +1,4 @@
-name: Frontend CI
+name: Application CI
 
 on:
   pull_request:
@@ -29,4 +29,24 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
       - run: npm test
+      - run: npm run build
+
+  cms:
+    name: Build Strapi
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: cms
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: cms/package-lock.json
+      - run: npm ci
+      - run: node scripts/initialize-local-env.cjs
       - run: npm run build

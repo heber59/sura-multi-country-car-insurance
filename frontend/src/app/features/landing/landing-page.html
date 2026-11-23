@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="page header-content">
-    <span class="wordmark">sura</span>
+    <span class="site-name">Seguro de auto</span>
     <nav class="market-switch" aria-label="País">
       @for (option of marketOptions; track option.code) {
         <a [routerLink]="['/', option.code]" [attr.aria-current]="option.code === market.code ? 'page' : null">
@@ -14,7 +14,7 @@
 <main class="page">
   <section class="hero" aria-labelledby="landing-heading">
     <div class="hero-copy">
-      <p class="market-label">Seguros SURA <span aria-hidden="true">·</span> {{ market.name }}</p>
+      <p class="market-label">{{ market.name }}</p>
       @let landing = state();
       @if (landing.status === 'ready') {
         <h1 id="landing-heading">{{ landing.content.headline }}</h1>
@@ -32,7 +32,7 @@
       }
     </div>
 
-    <img class="hero-image" src="/images/andes-drive.webp" alt="" fetchpriority="high">
+    <img class="hero-image" [src]="heroImage.src" [alt]="heroImage.alt" fetchpriority="high">
   </section>
 
   <section class="quote-overview" aria-labelledby="overview-heading">

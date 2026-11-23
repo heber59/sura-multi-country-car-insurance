@@ -1,4 +1,4 @@
-# Sura Multi-Country Car Insurance
+# Multi-Country Car Insurance
 
 Angular frontend and Strapi content management for car insurance in Chile and Colombia.
 
@@ -20,4 +20,4 @@ See [AGENTS.md](AGENTS.md) for contributor rules, frontend architecture, and the
 
 ## Run the landing page locally
 
-See the [frontend setup guide](frontend/README.md) for sample content, Strapi, and verification commands.
+The [frontend setup guide](frontend/README.md) covers starting Strapi and Angular, editing and publishing market copy, and running checks.

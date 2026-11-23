@@ -1,45 +1,38 @@
-# SURA Car Insurance Frontend
+# Car Insurance Frontend
 
-This Angular app serves the car insurance landing page for Chile and Colombia.
+One Angular app serves Chile and Colombia. Strapi 5 manages the published landing copy for each market.
 
-## Prerequisites
+## Run locally
 
-Install Node.js and npm. Use Node.js 20.19+, 22.12+, or 24.x within the corresponding major version. If your checkout is in WSL, run the commands in a WSL terminal.
+Use Node.js 22.12+ in the 22.x line or Node.js 24.x, and npm 10 or later. If the repository is in WSL, use WSL terminals for both services.
 
-## Run locally with sample content
-
-1. From the repository root, install dependencies and start the fixture API. Keep this terminal open.
+1. From the repository root, install and start Strapi.
 
    ```sh
-   cd frontend
-   npm ci
-   node fixtures/landing-api.mjs
+   npm --prefix cms ci
+   npm --prefix cms run develop
    ```
 
-2. In a second terminal at the repository root, start Angular.
+   Strapi starts on port `1337` and initializes a local SQLite database with one published landing entry per market. Create a local administrator at [Strapi Admin](http://localhost:1337/admin) to edit and publish copy in the Content Manager.
+
+2. In a second terminal at the repository root, install and start Angular.
 
    ```sh
-   cd frontend
-   npm start
+   npm --prefix frontend ci
+   npm --prefix frontend start
    ```
 
 3. Open the [country selector](http://localhost:4200/), [Chile](http://localhost:4200/cl), or [Colombia](http://localhost:4200/co).
 
-The fixture API serves sample content for both markets on port `1337`. If the landing page says the content is unavailable, check that the fixture API is running and that port `1337` is free before starting it. Use `Ctrl+C` in each terminal to stop both processes.
-
-## Run with Strapi 5
-
-Stop the fixture API and run your Strapi instance on port `1337`. Create the `insurance-landings` collection with Draft & Publish enabled. Add and publish one entry per market with `market` (`cl` or `co`), `headline`, and `description` fields.
-
-The [Angular proxy](proxy.conf.json) forwards requests to `/api/insurance-landings` during local development. For anonymous local testing, enable the collection's `find` permission. In production, serve the endpoint on the frontend origin, enforce published content and supported markets on the server, and route market URLs to Angular.
+The [Angular proxy](proxy.conf.json) forwards landing requests to Strapi. If a market shows the unavailable message, check that Strapi is running and that its landing entry is published. Press Ctrl+C in each terminal to stop the services.
 
 ## Test and build
 
-Run these commands from `frontend/`.
+Run these commands from the repository root.
 
 ```sh
-npm test
-npm run build
+npm --prefix frontend test
+npm --prefix frontend run build
 ```
 
-The production build writes the browser files to `dist/insurance/browser/`.
+The browser build is in `frontend/dist/insurance/browser/`. In production, serve the read-only Strapi landing endpoint on the frontend origin and route market URLs to Angular.
