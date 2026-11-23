@@ -23,4 +23,6 @@ Separate specification and QA agents offered independent interpretation at intak
 
 ## Consequences
 
+The [US-03 AC2 example](../story-records.md#worked-example-for-us-03-ac2) traces the owner's request for country-specific terms through review and QA.
+
 This ADR records planning and human corrections. The original conversation is the source for this summary. During actual story runs, preserve unedited session exports and link the story, spec, ADR, code, tests, review fixes, QA verdict, and human approvals. Application execution and review evidence are still pending.

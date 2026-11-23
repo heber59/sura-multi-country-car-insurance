@@ -31,4 +31,4 @@ Wait for an explicit publish request before creating a publish branch, pushing, 
 
 The protected branches are `develop`, `qa`, and `main`. The repository owner configures protection. Humans review and merge promotion PRs after CI passes.
 
-Use the [agent workflow](FLOW.md) for user stories.
+Use the [agent workflow](FLOW.md) for user stories and read any skill linked for your role before starting.
