@@ -1,0 +1,10 @@
+<main class="market-selection">
+  <p class="brand">SURA</p>
+  <h1>Seguro de auto</h1>
+  <p>Selecciona tu país para conocer tu seguro.</p>
+  <nav aria-label="País">
+    @for (market of markets; track market.code) {
+      <a [routerLink]="['/', market.code]">{{ market.name }}</a>
+    }
+  </nav>
+</main>

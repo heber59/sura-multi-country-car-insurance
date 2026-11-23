@@ -1,0 +1,41 @@
+.market-selection {
+  width: min(100% - var(--space-32), 34rem);
+  margin: clamp(3rem, 12vh, 8rem) auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: var(--color-surface);
+  border-radius: var(--radius-panel);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+h1 {
+  margin-block: var(--space-16);
+  font-size: clamp(2rem, 7vw, 3rem);
+}
+
+p {
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  margin-block-start: var(--space-24);
+}
+
+a {
+  padding: var(--space-12) var(--space-20);
+  border-radius: var(--radius-control);
+  background: var(--color-action);
+  color: var(--color-on-action);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a:hover {
+  background: var(--color-action-hover);
+}
