@@ -1,36 +1,26 @@
 # Car Insurance Frontend
 
-One Angular app serves Chile and Colombia. Strapi 5 manages the published landing copy for each market.
+One Angular app serves Chile and Colombia. Strapi 5 manages each market’s landing, quote form, plans, and terms.
 
 ## Run locally
 
-Use Node.js 22.12+ in the 22.x line or Node.js 24.x, and npm 10 or later. If the repository is in WSL, use WSL terminals for both services.
+Use Node.js 22.12+ in the 22.x line or Node.js 24.x, and npm 10 or later. If the repository is in WSL, run the command from a WSL terminal.
 
-1. From the repository root, install and start Strapi.
+From the repository root, run one command to install dependencies from the lockfiles and start Strapi and Angular.
 
-   ```sh
-   npm --prefix cms ci
-   npm --prefix cms run develop
-   ```
+```sh
+npm start
+```
 
-   Strapi starts on port `1337` and initializes a local SQLite database with one published landing entry per market. Create a local administrator at [Strapi Admin](http://localhost:1337/admin) to edit and publish copy in the Content Manager.
+Set `FRONTEND_PORT` and `PORT` before startup to use different Angular and Strapi ports.
 
-2. In a second terminal at the repository root, install and start Angular.
+Strapi starts on port `1337` and seeds a local SQLite database with one published landing, one quote configuration, and two sample plans per market. The database persists across restarts.
 
-   ```sh
-   npm --prefix frontend ci
-   npm --prefix frontend start
-   ```
+Once both services are ready, open the [country selector](http://localhost:4200/) or go directly to the quote for [Chile](http://localhost:4200/cl/cotizar) or [Colombia](http://localhost:4200/co/cotizar). Use fictitious details to complete the form, choose a plan, and simulate payment. The [Angular proxy](proxy.conf.cjs) uses Strapi's `HOST` and `PORT` from the shell or `cms/.env`. Press Ctrl+C to stop both services.
 
-3. Open the [country selector](http://localhost:4200/), [Chile](http://localhost:4200/cl), or [Colombia](http://localhost:4200/co).
+## Edit market content
 
-The [Angular proxy](proxy.conf.json) forwards landing requests to Strapi. If a market shows the unavailable message, check that Strapi is running and that its landing entry is published. Press Ctrl+C in each terminal to stop the services.
-
-## Configure quotes in Strapi
-
-Development startup seeds one published **Quote configuration** and two sample **Quote plan** entries for each market. Use Content Manager to edit the fields, select options, validation, terms, plan order, and annual prices. Mark identity fields as **Sensitive** for masking during quote review.
-
-The read-only `GET /api/quote-configurations` endpoint requires a market filter and published status. It serves the published configuration and active published plans for that market. Editing uses the authenticated Strapi admin.
+Create a local administrator in [Strapi Admin](http://localhost:1337/admin) and open Content Manager. Keep one published **Quote configuration** per market. Add or reorder its form fields and select options, configure validation, and edit the terms. Mark identity fields as **Sensitive** to mask them in the review step. In **Quote plan**, set the market, unique plan key within that market, position, annual price in the local currency, and one coverage or benefit per line. Publish the changes and reload the quote to see them. Plans must be active and published to appear.
 
 ## Test and build
 
@@ -41,4 +31,6 @@ npm --prefix frontend test
 npm --prefix frontend run build
 ```
 
-The browser build is in `frontend/dist/insurance/browser/`. In production, serve the read-only Strapi landing endpoint on the frontend origin and route market URLs to Angular.
+With both services running, install Chromium with `npm --prefix frontend exec -- playwright install chromium`, then run `npm --prefix frontend run test:e2e`. Set `QUOTE_TEST_URL` to test a frontend on a different port.
+
+The browser build is in `frontend/dist/insurance/browser/`. In production, serve Strapi’s `GET /api/insurance-landings` and `GET /api/quote-configurations` on the frontend origin and route market URLs to Angular. These public endpoints expose published content for the requested supported market. Editing uses the authenticated Strapi admin, and the browser needs no content API token.

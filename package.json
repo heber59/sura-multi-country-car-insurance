@@ -1,0 +1,8 @@
+{
+  "name": "multi-country-car-insurance",
+  "private": true,
+  "scripts": {
+    "prestart": "npm --prefix cms ci --prefer-offline && npm --prefix frontend ci --prefer-offline",
+    "start": "node scripts/start-local.cjs"
+  }
+}

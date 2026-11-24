@@ -1,0 +1,43 @@
+@if (plans().length) {
+  <fieldset class="plans">
+    <legend>Compara las coberturas y elige una opción.</legend>
+    <div class="plan-grid">
+      @for (plan of plans(); track plan.key) {
+        <article class="plan">
+          @if (plan.recommended) {
+            <p class="recommended">Recomendado</p>
+          }
+          <h2>{{ plan.name }}</h2>
+          <p>{{ plan.description }}</p>
+          <p><strong class="price">{{ formatPrice(plan.price, market()) }}</strong> al año</p>
+          <h3>Coberturas</h3>
+          <ul>
+            @for (coverage of plan.coverages; track $index) {
+              <li>{{ coverage }}</li>
+            }
+          </ul>
+          <h3>Beneficios</h3>
+          <ul>
+            @for (benefit of plan.benefits; track $index) {
+              <li>{{ benefit }}</li>
+            }
+          </ul>
+          <label class="choice">
+            <input
+              type="radio" name="insurance-plan" [value]="plan.key"
+              [checked]="selectedKey() === plan.key" (change)="selected.emit(plan.key)"
+            >
+            Elegir {{ plan.name }}
+          </label>
+        </article>
+      }
+    </div>
+  </fieldset>
+} @else {
+  <p role="status">No hay planes disponibles para {{ market().name }} por el momento.</p>
+}
+
+<div class="actions">
+  <button type="button" class="secondary" (click)="back.emit()">Volver a tus datos</button>
+  <button type="button" class="primary" [disabled]="!selectedKey()" (click)="next.emit()">Revisar cotización</button>
+</div>

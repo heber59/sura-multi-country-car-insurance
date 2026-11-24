@@ -39,7 +39,7 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": { "buildTarget": "insurance:build:production" },
-            "development": { "buildTarget": "insurance:build:development", "proxyConfig": "proxy.conf.json" }
+            "development": { "buildTarget": "insurance:build:development", "proxyConfig": "proxy.conf.cjs" }
           },
           "defaultConfiguration": "development"
         },
