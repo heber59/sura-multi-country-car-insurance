@@ -1,0 +1,76 @@
+<div class="summary-grid">
+  <section class="panel">
+    <h2>Tus datos</h2>
+    @for (section of sections; track section.key) {
+      <h3>{{ section.label }}</h3>
+      <dl>
+        @for (field of fields(); track field.key) {
+          @if (field.section === section.key) {
+            <dt>{{ field.label }}</dt>
+            <dd>{{ displayValue(field) }}</dd>
+          }
+        }
+      </dl>
+    }
+    <div class="actions">
+      <button type="button" class="secondary" [disabled]="status() === 'processing'" (click)="editDetails.emit()">
+        Editar tus datos
+      </button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Plan elegido</h2>
+    <p>{{ plan().name }}</p>
+    <p class="price">{{ formatPrice(plan().price, market()) }} <small>al año</small></p>
+    <div class="actions">
+      <button type="button" class="secondary" [disabled]="status() === 'processing'" (click)="editPlan.emit()">
+        Cambiar plan
+      </button>
+    </div>
+  </section>
+</div>
+
+<section class="panel payment">
+  <h2>Pago simulado</h2>
+  <p>Esta prueba no genera un cobro ni solicita datos de tarjeta.</p>
+  @if (terms(); as publishedTerms) {
+    <details>
+      <summary>Términos y condiciones de {{ market().name }}</summary>
+      <p class="terms">{{ publishedTerms }}</p>
+    </details>
+    <label>
+      <input
+        #acceptance type="checkbox" [checked]="accepted()" [disabled]="status() === 'processing'"
+        (change)="accepted.set(acceptance.checked)"
+      >
+      Acepto los términos y condiciones.
+    </label>
+    <label>
+      <input
+        #rejection type="checkbox" [checked]="simulateRejection()" [disabled]="status() === 'processing'"
+        (change)="simulateRejection.set(rejection.checked)"
+      >
+      Simular un rechazo en el próximo intento.
+    </label>
+  } @else {
+    <p role="status">Los términos y condiciones no están disponibles. Intenta más tarde.</p>
+  }
+
+  @if (status() === 'rejected') {
+    <p class="error" role="alert">El pago simulado fue rechazado. Puedes volver a intentarlo.</p>
+  }
+  @if (status() === 'processing') {
+    <p role="status">Procesando el pago simulado…</p>
+  }
+
+  <div class="actions">
+    <button
+      type="button" class="primary"
+      [disabled]="!terms() || !accepted() || status() === 'processing' || status() === 'confirmed'"
+      (click)="pay()"
+    >
+      {{ status() === 'rejected' ? 'Reintentar pago simulado' : 'Simular pago' }}
+    </button>
+  </div>
+</section>

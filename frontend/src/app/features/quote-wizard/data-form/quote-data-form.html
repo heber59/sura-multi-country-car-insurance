@@ -1,0 +1,81 @@
+<form #form autocomplete="off" novalidate (submit)="submit($event, form)">
+  @for (group of groups(); track $index) {
+    <fieldset>
+      <legend>{{ group.section === 'policyholder' ? 'Datos del titular' : 'Datos del vehículo' }}</legend>
+      <div class="fields">
+        @for (field of group.fields; track field.key) {
+          @let fieldId = 'quote-field-' + field.key;
+          @let hasError = showError(field);
+          @let descriptionId = fieldDescription(field, hasError);
+          @let initialValue = getInitialValue(field);
+
+          <div class="field">
+            @if (field.type === 'checkbox') {
+              <div class="checkbox">
+                <input
+                  #checkbox
+                  type="checkbox"
+                  [id]="fieldId"
+                  [name]="fieldId"
+                  [required]="field.required"
+                  [checked]="initialValue === true"
+                  [attr.aria-describedby]="descriptionId"
+                  [attr.aria-invalid]="hasError ? 'true' : null"
+                  (change)="setValue(field.key, checkbox.checked)"
+                  (blur)="markTouched(field.key)"
+                >
+                <label [for]="fieldId">{{ field.label }}</label>
+              </div>
+            } @else {
+              <label [for]="fieldId">{{ field.label }}</label>
+              @if (field.type === 'select') {
+                <select
+                  #select
+                  [id]="fieldId"
+                  [name]="fieldId"
+                  [required]="field.required"
+                  [attr.aria-describedby]="descriptionId"
+                  [attr.aria-invalid]="hasError ? 'true' : null"
+                  (change)="setValue(field.key, select.value)"
+                  (blur)="markTouched(field.key)"
+                >
+                  <option value="" [disabled]="field.required" [selected]="!initialValue">
+                    Selecciona una opción
+                  </option>
+                  @for (option of field.options; track option.value) {
+                    <option [value]="option.value" [selected]="initialValue === option.value">
+                      {{ option.label }}
+                    </option>
+                  }
+                </select>
+              } @else {
+                <input
+                  #control
+                  [type]="field.type"
+                  [id]="fieldId"
+                  [name]="fieldId"
+                  [value]="initialValue ?? ''"
+                  [required]="field.required"
+                  [attr.step]="field.type === 'number' ? 'any' : null"
+                  [attr.aria-describedby]="descriptionId"
+                  [attr.aria-invalid]="hasError ? 'true' : null"
+                  (input)="setInputValue(field, control)"
+                  (blur)="markTouched(field.key)"
+                >
+              }
+            }
+            @if (field.helpText) {
+              <p class="help" [id]="'quote-help-' + field.key">{{ field.helpText }}</p>
+            }
+            @if (hasError) {
+              <p class="error" [id]="'quote-error-' + field.key">{{ field.errorMessage }}</p>
+            }
+          </div>
+        }
+      </div>
+    </fieldset>
+  }
+  <div class="actions">
+    <button type="submit" class="primary">Continuar a planes</button>
+  </div>
+</form>

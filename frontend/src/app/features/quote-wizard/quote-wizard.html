@@ -1,0 +1,63 @@
+<header class="site-header">
+  <div class="page header-content">
+    <a [routerLink]="['/', market.code]">Seguro de auto</a>
+    <span>{{ market.name }}</span>
+  </div>
+</header>
+
+@let configuration = content();
+@if (configuration === null && !draft().reference) {
+  <app-quote-unavailable />
+} @else {
+  <main class="page wizard">
+    @if (draft().reference; as reference) {
+      <section class="confirmation">
+        <h1 #stepHeading tabindex="-1">Pago simulado confirmado</h1>
+        <p>Tu número de cotización es <strong>{{ reference }}</strong>.</p>
+        <p>La simulación no genera un cobro ni contrata un seguro.</p>
+        <div class="actions">
+          <button type="button" class="primary" (click)="startNewQuote()">Nueva cotización</button>
+        </div>
+      </section>
+    } @else if (configuration) {
+      <nav aria-label="Pasos de cotización">
+        <ol class="steps">
+          <li [attr.aria-current]="step() === 'details' ? 'step' : null">1. Tus datos</li>
+          <li [attr.aria-current]="step() === 'plans' ? 'step' : null">2. Plan</li>
+          <li [attr.aria-current]="step() === 'summary' ? 'step' : null">3. Resumen y pago</li>
+        </ol>
+      </nav>
+
+      @switch (step()) {
+        @case ('details') {
+          <h1 #stepHeading tabindex="-1">Cotiza tu seguro de auto</h1>
+          <p>Usa datos ficticios para completar esta cotización de prueba.</p>
+          <app-quote-data-form
+            [market]="market" [fields]="configuration.fields" [values]="draft().values"
+            (completed)="completeDetails($event)"
+          />
+        }
+        @case ('plans') {
+          <h1 #stepHeading tabindex="-1">Elige tu plan</h1>
+          <app-quote-plan-list
+            [market]="market" [plans]="configuration.plans" [selectedKey]="plan()?.key ?? ''"
+            (selected)="choosePlan($event)" (back)="goTo('details')" (next)="goTo('summary')"
+          />
+        }
+        @case ('summary') {
+          @if (plan(); as selectedPlan) {
+            <h1 #stepHeading tabindex="-1">Revisa tu cotización</h1>
+            <app-quote-summary
+              [market]="market" [fields]="configuration.fields" [values]="draft().values"
+              [plan]="selectedPlan" [terms]="configuration.terms"
+              (editDetails)="goTo('details')" (editPlan)="goTo('plans')" (confirmed)="confirmPayment()"
+            />
+          }
+        }
+      }
+    } @else {
+      <h1>Cotiza tu seguro de auto</h1>
+      <p role="status">Cargando la cotización…</p>
+    }
+  </main>
+}
