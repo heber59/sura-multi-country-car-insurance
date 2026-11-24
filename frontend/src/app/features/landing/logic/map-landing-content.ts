@@ -1,4 +1,5 @@
 import { MarketCode } from '../../../core/market/market.config';
+import { isPublicationTimestamp } from '../../../core/strapi/is-publication-timestamp';
 import { LandingContent } from '../types/landing-content';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -19,7 +20,7 @@ export function mapLandingContent(response: unknown, market: MarketCode): Landin
   if (
     typeof headline !== 'string' || !headline.trim() ||
     typeof description !== 'string' || !description.trim() ||
-    typeof publishedAt !== 'string' || !Number.isFinite(Date.parse(publishedAt))
+    !isPublicationTimestamp(publishedAt)
   ) {
     return null;
   }
