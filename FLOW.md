@@ -1,6 +1,6 @@
 # Project workflow
 
-Read [scope](SCOPE.md), [project rules](AGENTS.md), and accepted [ADRs](docs/adr/). [Roles](docs/agents.md) · [Handoffs](docs/story-records.md)
+[Scope](SCOPE.md) · [Rules](AGENTS.md) · [ADRs](docs/adr/). [Roles](docs/agents.md) · [Handoffs](docs/story-records.md)
 
 ```mermaid
 flowchart TD
@@ -24,4 +24,4 @@ flowchart TD
 
 Codex shares repository context across scoped agents and runs builds and browser checks. Humans approve business rules and releases because they own product behavior and risk.
 
-PR #9 checks exposed empty select options and duplicate active plan keys. PR #10 moved those checks into Strapi publication. The owner replaced mock landing fixtures with live Strapi. With five developers, assign story owners and coordinate shared contracts. Aim for 100–500 changed lines and explain larger increments.
+PR #9 checks exposed empty select options and duplicate active plan keys. PR #10 moved those checks into Strapi publication. The owner replaced mock landing fixtures with live Strapi. With five developers, assign story owners and coordinate shared contracts. Target 100–500 changed lines. Explain larger increments.
