@@ -2,5 +2,9 @@
   "/api/insurance-landings": {
     "target": "http://127.0.0.1:1337",
     "secure": false
+  },
+  "/api/quote-configurations": {
+    "target": "http://127.0.0.1:1337",
+    "secure": false
   }
 }

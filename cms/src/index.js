@@ -1,5 +1,7 @@
 'use strict';
 
+const seedQuoteContent = require('./seed/quote-content');
+
 const initialLandings = [
   {
     market: 'cl',
@@ -15,6 +17,8 @@ const initialLandings = [
 
 module.exports = {
   async bootstrap({ strapi }) {
+    await seedQuoteContent(strapi);
+
     if (!strapi.config.get('landing.seedDevelopmentContent')) {
       return;
     }

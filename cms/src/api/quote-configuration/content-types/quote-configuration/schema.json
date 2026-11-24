@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quote_configurations",
+  "info": {
+    "singularName": "quote-configuration",
+    "pluralName": "quote-configurations",
+    "displayName": "Quote configuration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "market": {
+      "type": "enumeration",
+      "enum": [
+        "cl",
+        "co"
+      ],
+      "required": true
+    },
+    "fields": {
+      "type": "component",
+      "component": "quote.form-field",
+      "repeatable": true
+    },
+    "terms": {
+      "type": "text"
+    }
+  }
+}
