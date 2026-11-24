@@ -1,0 +1,46 @@
+<header class="site-header">
+  <div class="page header-content">
+    <span class="site-name">Seguro de auto</span>
+    <nav class="market-switch" aria-label="País">
+      @for (option of marketOptions; track option.code) {
+        <a [routerLink]="['/', option.code]" [attr.aria-current]="option.code === market.code ? 'page' : null">
+          {{ option.name }}
+        </a>
+      }
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero" aria-labelledby="landing-heading">
+    <div class="hero-copy">
+      <p class="market-label">{{ market.name }}</p>
+      @let landing = state();
+      @if (landing.status === 'ready') {
+        <h1 id="landing-heading">{{ landing.content.headline }}</h1>
+        <p class="description">{{ landing.content.description }}</p>
+        <a class="quote-link" [routerLink]="['/', market.code, 'cotizar']">Cotizar</a>
+      } @else {
+        <h1 id="landing-heading">Seguro de auto</h1>
+        <p class="description" role="status">
+          @if (landing.status === 'loading') {
+            Cargando información del seguro…
+          } @else {
+            La información del seguro para {{ market.name }} no está disponible por el momento.
+          }
+        </p>
+      }
+    </div>
+
+    <img class="hero-image" [src]="heroImage.src" [alt]="heroImage.alt" fetchpriority="high">
+  </section>
+
+  <section class="quote-overview" aria-labelledby="overview-heading">
+    <h2 id="overview-heading">Cómo cotizar</h2>
+    <ol class="quote-steps">
+      <li><h3>Ingresa tus datos</h3><p>Completa los datos del titular y del vehículo.</p></li>
+      <li><h3>Elige un plan</h3><p>Compara las opciones disponibles en tu país.</p></li>
+      <li><h3>Revisa tu cotización</h3><p>Confirma los detalles y simula el pago.</p></li>
+    </ol>
+  </section>
+</main>
