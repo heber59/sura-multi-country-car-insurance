@@ -1,31 +1,27 @@
 # Project workflow
 
-One Angular build serves both markets. Follow [AGENTS.md](AGENTS.md) and accepted [ADRs](docs/adr/). Story QA and the lead must read [SCOPE.md](SCOPE.md) before defining or assigning work.
+Read [scope](SCOPE.md), [project rules](AGENTS.md), and accepted [ADRs](docs/adr/). The [role definitions](docs/agents.md) and [story record format](docs/story-records.md) specify handoffs.
 
 ```mermaid
 flowchart TD
-    A[User story] --> B[Story QA agent defines acceptance criteria]
-    B --> X[Resolve architecture decisions]
-    X --> C[Lead assigns implementation]
-    C --> D[Code verifier]
-    D -- Findings --> C
-    D -- Pass --> E[Work to develop PR]
-    E --> F[Dev to QA PR]
-    F --> G[Story QA verifies QA]
-    G -- Fail --> C
-    G -- Pass --> H[QA to main PR]
+    Story --> Spec --> ADR --> Delegation --> Implementation --> Review
+    Review -->|Findings| Implementation
+    Review -->|Pass| Develop
+    Develop --> QA
+    QA -->|Fail| Implementation
+    QA -->|Pass| Release
 ```
 
-| Step | Responsibility and evidence |
-| --- | --- |
-| Define | Story QA uses the [QA skill](skills/insurance-qa/SKILL.md) to define criteria in `docs/specs/` and bring unresolved behavior to the owner. |
-| Decide | The ADR author uses assessment and project context to draft or reuse ADRs. The owner accepts proposals or returns them for revision. |
-| Delegate | The lead reads the flow, ADRs, architecture, and folders. Split by dependency and assign scoped context, tests, and models by risk and complexity. |
-| Implement | Implementers use the [development skill](skills/insurance-development/SKILL.md) and report the diff, criterion coverage, and check results. |
-| Verify code | An independent verifier uses the QA skill to check behavior, code quality, and folder placement. Record findings and verified fixes in `docs/reviews/`. Open the work-to-`develop` PR after verification passes. |
-| Promote and test | After a human merges into `develop`, open `develop` → `qa`. After merge, Story QA uses the QA skill against the deployed revision and records results in `docs/qa/`. Route failures through development again. |
-| Release | Open `qa` → `main` only after QA passes. Require CI builds and relevant automated tests on each PR. Record the QA-tested revision and rerun affected checks if the release PR changes it. Humans review and merge after checks pass. |
+| Step | Purpose | AI | Tool, model, role or skill | Artifact | Human decision and return path |
+| --- | --- | --- | --- | --- | --- |
+| Spec | Derive verifiable criteria from the story | Yes | Codex GPT-6.2 Sol, Story QA, [QA skill](skills/insurance-qa/SKILL.md) | [Specs](docs/specs/) | Owner approves the revision or returns ambiguous criteria to Story QA. |
+| ADR | Resolve architecture and content boundaries | Yes | Codex GPT-6.2 Sol, ADR author, [story skill](skills/insurance-story/SKILL.md) | [ADRs](docs/adr/) | Owner accepts the decision or returns it to the author. |
+| Delegate | Assign work by dependencies and risk | Yes | Codex GPT-6.2 Sol, lead and scoped subagents | [Session index](docs/agent-sessions.md) | Owner authorizes scope and changes. Lead replans rejected assignments. |
+| Implement | Build and test through the real entry points | Yes | Codex GPT-6.2 Sol, CMS and Angular implementers, [development skill](skills/insurance-development/SKILL.md) | `cms/src/`, `frontend/src/`, [browser test](frontend/e2e/quote-wizard.mjs) | Owner decides business behavior. Lead returns deviations to implementers. |
+| Review | Verify criteria independently and retest fixes | Yes | Codex GPT-6.2 Sol, verifier, QA skill | [Reviews](docs/reviews/) | Lead sends findings back. Maintainer reviews CI and the PR before merging into develop. |
+| QA | Test published fixtures on the deployed revision | Yes for PR checks. Deployed run pending. | Codex GPT-6.2 Sol, Story QA, QA skill | [QA verdict](docs/qa/US-01-03.md) | Maintainer approves promotion. Story QA sends failures to the lead. |
+| Release | Review the QA-tested revision and CI | No for merge decisions | GitHub, human reviewer | GitHub promotion PR | Maintainer merges after QA and CI, or returns the revision for fixes. |
 
-Aim for 100–500 changed code lines per session in independently verifiable chunks. Normally stay within 1,000. Larger changes, such as 1,100, are acceptable when splitting hurts verification. Record why. Follow [agent definitions](docs/agents.md). Record actual models and link the story, spec, ADRs, code, tests, fixes, QA verdict, and unedited session exports.
+Codex let the lead share repository context, delegate bounded tasks, and run builds and browser checks in one workspace. Humans own business rules, spec and ADR approval, publication, and merges because these decisions authorize product behavior and releases.
 
-With five developers, assign story ownership and coordinate shared changes. Humans own merges. [ADR 002](docs/adr/002-conversation-led-planning.md) records planning adjustments.
+PR #9 checks exposed empty select options and duplicate active plan keys. PR #10 moved those checks into Strapi publication. The owner also replaced mock landing fixtures with live Strapi. With five developers, assign one story owner each and coordinate shared contracts before parallel changes. Aim for 100–500 changed lines and explain larger connected increments.

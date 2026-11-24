@@ -23,6 +23,9 @@ describe('mapLandingContent', () => {
   it.each([
     { ...publishedEntry, publishedAt: null },
     { ...publishedEntry, publishedAt: 'invalid' },
+    { ...publishedEntry, publishedAt: '0' },
+    { ...publishedEntry, publishedAt: '2026-11-21' },
+    { ...publishedEntry, publishedAt: '2026-02-30T13:00:00.000Z' },
     { ...publishedEntry, headline: ' ' },
     { ...publishedEntry, description: 7 },
   ])('rejects an unpublished or malformed entry', (entry) => {
