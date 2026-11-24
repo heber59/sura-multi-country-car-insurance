@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "insurance_landings",
+  "info": {
+    "singularName": "insurance-landing",
+    "pluralName": "insurance-landings",
+    "displayName": "Insurance landing"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "market": {
+      "type": "enumeration",
+      "enum": ["cl", "co"],
+      "required": true
+    },
+    "headline": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
