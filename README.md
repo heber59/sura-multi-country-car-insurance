@@ -1,4 +1,4 @@
-# Sura Multi-Country Car Insurance
+# Multi-Country Car Insurance
 
 Angular frontend and Strapi content management for car insurance in Chile and Colombia.
 
@@ -17,3 +17,7 @@ See [AGENTS.md](AGENTS.md) for contributor rules, frontend architecture, and the
 | Environment       | Start the whole project with one command, such as `docker compose up`, and seed both countries.       |
 | Accessibility     | Make the entire wizard keyboard-operable and give every field an accessible label.                    |
 | Responsive design | Support mobile and desktop.                                                                           |
+
+## Run the landing page locally
+
+The [frontend setup guide](frontend/README.md) covers starting Strapi and Angular, editing and publishing market copy, and running checks.
