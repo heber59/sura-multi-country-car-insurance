@@ -1,6 +1,6 @@
 # Project workflow
 
-Read [scope](SCOPE.md), [project rules](AGENTS.md), and accepted [ADRs](docs/adr/). The [role definitions](docs/agents.md) and [story record format](docs/story-records.md) specify handoffs.
+Read [scope](SCOPE.md), [project rules](AGENTS.md), and accepted [ADRs](docs/adr/). [Roles](docs/agents.md) · [Handoffs](docs/story-records.md)
 
 ```mermaid
 flowchart TD
@@ -22,6 +22,6 @@ flowchart TD
 | QA | Test published fixtures on the deployed revision | Yes for PR checks. Deployed run pending. | Codex GPT-6.2 Sol, Story QA, QA skill | [QA verdict](docs/qa/US-01-03.md) | Maintainer approves promotion. Story QA sends failures to the lead. |
 | Release | Review the QA-tested revision and CI | No for merge decisions | GitHub, human reviewer | GitHub promotion PR | Maintainer merges after QA and CI, or returns the revision for fixes. |
 
-Codex let the lead share repository context, delegate bounded tasks, and run builds and browser checks in one workspace. Humans own business rules, spec and ADR approval, publication, and merges because these decisions authorize product behavior and releases.
+Codex shares repository context across scoped agents and runs builds and browser checks. Humans approve business rules and releases because they own product behavior and risk.
 
-PR #9 checks exposed empty select options and duplicate active plan keys. PR #10 moved those checks into Strapi publication. The owner also replaced mock landing fixtures with live Strapi. With five developers, assign one story owner each and coordinate shared contracts before parallel changes. Aim for 100–500 changed lines and explain larger connected increments.
+PR #9 checks exposed empty select options and duplicate active plan keys. PR #10 moved those checks into Strapi publication. The owner replaced mock landing fixtures with live Strapi. With five developers, assign story owners and coordinate shared contracts. Aim for 100–500 changed lines and explain larger increments.

@@ -1,6 +1,6 @@
 # Production dependency audit
 
-On 23 November 2026, `npm audit --omit=dev --json` reported zero findings in Angular and 28 package entries in Strapi (22 high, six moderate, zero critical). The CMS pins Strapi and its utilities to 5.63.0, the latest stable release returned by the npm registry in this check. Counts include dependent packages affected by the underlying advisories.
+On 23 November 2026, `npm audit --omit=dev --json` reported zero findings in Angular and 28 package entries in Strapi (22 high, six moderate, zero critical). A lockfile-only audit fix in an isolated copy changed zero packages and left all 28 findings. The CMS pins Strapi and its utilities to 5.63.0, the latest stable release returned by the npm registry in this check. Counts include dependent packages affected by the underlying advisories.
 
 | Advisory family | Triage |
 | --- | --- |
