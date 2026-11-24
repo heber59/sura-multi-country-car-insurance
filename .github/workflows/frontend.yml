@@ -32,7 +32,7 @@ jobs:
       - run: npm run build
 
   cms:
-    name: Build Strapi
+    name: Build and test Strapi
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -48,5 +48,6 @@ jobs:
           cache: npm
           cache-dependency-path: cms/package-lock.json
       - run: npm ci
+      - run: npm test
       - run: node scripts/initialize-local-env.cjs
       - run: npm run build

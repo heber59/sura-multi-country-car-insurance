@@ -1,6 +1,7 @@
 'use strict';
 
 const seedQuoteContent = require('./seed/quote-content');
+const registerQuotePublicationValidation = require('./quote-publication-validation');
 
 const initialLandings = [
   {
@@ -16,6 +17,10 @@ const initialLandings = [
 ];
 
 module.exports = {
+  register({ strapi }) {
+    registerQuotePublicationValidation(strapi);
+  },
+
   async bootstrap({ strapi }) {
     await seedQuoteContent(strapi);
 
