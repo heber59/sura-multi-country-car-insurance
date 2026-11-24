@@ -1,0 +1,68 @@
+{
+  "collectionName": "components_quote_form_fields",
+  "info": {
+    "displayName": "Form field"
+  },
+  "attributes": {
+    "key": {
+      "type": "string",
+      "required": true,
+      "regex": "^[a-z][a-zA-Z0-9_-]*$"
+    },
+    "section": {
+      "type": "enumeration",
+      "enum": [
+        "policyholder",
+        "vehicle"
+      ],
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "text",
+        "number",
+        "select",
+        "date",
+        "checkbox"
+      ],
+      "required": true
+    },
+    "label": { "type": "string", "required": true },
+    "required": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "helpText": {
+      "type": "text"
+    },
+    "errorMessage": { "type": "text", "required": true },
+    "options": {
+      "type": "component",
+      "component": "quote.select-option",
+      "repeatable": true
+    },
+    "pattern": {
+      "type": "string"
+    },
+    "minimumAge": {
+      "type": "integer",
+      "min": 0
+    },
+    "minimum": {
+      "type": "decimal"
+    },
+    "maximum": {
+      "type": "decimal"
+    },
+    "vehicleYear": {
+      "type": "boolean",
+      "default": false
+    },
+    "sensitive": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

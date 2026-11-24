@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "quote_plans",
+  "info": {
+    "singularName": "quote-plan",
+    "pluralName": "quote-plans",
+    "displayName": "Quote plan"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "market": {
+      "type": "enumeration",
+      "enum": [
+        "cl",
+        "co"
+      ],
+      "required": true
+    },
+    "key": { "type": "string", "required": true },
+    "position": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "name": { "type": "string", "required": true },
+    "description": { "type": "text", "required": true },
+    "price": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    },
+    "coverages": { "type": "text", "required": true },
+    "benefits": { "type": "text", "required": true },
+    "active": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "recommended": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  }
+}
